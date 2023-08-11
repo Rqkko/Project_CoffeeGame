@@ -18,6 +18,8 @@ public class Customer : MonoBehaviour
     public string foodWanted;
     private GameObject foodText;
 
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,8 +34,11 @@ public class Customer : MonoBehaviour
 
         foodsInMenu = GameObject.FindGameObjectWithTag("Menu").GetComponent<MenuManager>().foodsInMenu;
         foodWanted = GetRandomFood();
-        foodText = transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+        foodText = transform.GetChild(1).gameObject.transform.GetChild(0).gameObject;
         foodText.GetComponent<TextMeshProUGUI>().text = foodWanted;
+
+        animator = gameObject.GetComponent<Animator>();
+        animator.SetTrigger("Walk");
     }
 
     // Update is called once per frame
@@ -54,22 +59,32 @@ public class Customer : MonoBehaviour
         }
 
         // Walking to the queue
-        else if (isEntering && transform.position != queuePos)
+        else if (isEntering)
         {
-            transform.position = Vector3.MoveTowards(transform.position, queuePos, walkSpeed * Time.deltaTime);
-
-            if (transform.position == queueManager.orderPos)
+            if (transform.position != queuePos)
             {
-                isReadyToOrder = true;
-                isEntering = false;
-                foodText.SetActive(true);
+                transform.position = Vector3.MoveTowards(transform.position, queuePos, walkSpeed * Time.deltaTime);
+            }
+            else
+            {
+                animator.SetTrigger("Idle");
+
+                // On the order position
+                if (transform.position == queueManager.orderPos)
+                {
+                    isReadyToOrder = true;
+                    isEntering = false;
+                }
             }
         }
 
         // Ordering
         else if (isReadyToOrder)
         {
-
+            if (!foodText.activeSelf)
+            {
+                foodText.SetActive(true);
+            }
         }
     }
 
@@ -92,6 +107,7 @@ public class Customer : MonoBehaviour
     {
         currentQueue--;
         queuePos = new Vector3(queueManager.orderPos.x, queueManager.orderPos.y, GetQueuePosZ());
+        animator.SetTrigger("Walk");
     }
 
     private string GetRandomFood()
