@@ -6,7 +6,7 @@ using UnityEngine;
 public class DoorMover : MonoBehaviour
 {
     public float rotateSpeed = 260;
-    private bool opening;
+    public bool opening;
 
     // Start is called before the first frame update
     void Start()
