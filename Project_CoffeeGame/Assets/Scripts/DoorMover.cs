@@ -6,58 +6,49 @@ using UnityEngine;
 public class DoorMover : MonoBehaviour
 {
     public float rotateSpeed = 260;
-    public bool opening;
+    public bool isOpening;
+
+    private float currentTurnAngle;
 
     // Start is called before the first frame update
     void Start()
     {
-        opening = false;
+        isOpening = false;
+        currentTurnAngle = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
         // Opening
-        if (opening)
+        if (isOpening && currentTurnAngle < 90)
         {
-            if (transform.eulerAngles.y < 90)
+            currentTurnAngle += rotateSpeed * Time.deltaTime;
+            if (currentTurnAngle >= 90)
             {
-                transform.Rotate(Vector3.up, rotateSpeed * Time.deltaTime);
-                if (transform.eulerAngles.y > 90)
-                {
-                    transform.eulerAngles = new Vector3(transform.eulerAngles.x, 90, transform.eulerAngles.z);
-                }
+                currentTurnAngle = 90;
             }
+            transform.rotation = Quaternion.AngleAxis(currentTurnAngle, Vector3.up);
         } 
         // Closing
-        else
+        else if (!isOpening && currentTurnAngle > 0)
         {
-            if (transform.eulerAngles.y < 350 && transform.eulerAngles.y != 0)
+            currentTurnAngle -= rotateSpeed * Time.deltaTime;
+            if (currentTurnAngle <= 0)
             {
-                transform.Rotate(Vector3.up, -rotateSpeed * Time.deltaTime);
-                Debug.Log(transform.eulerAngles.y);
-                if (transform.eulerAngles.y > 350)
-                {
-                    transform.eulerAngles = new Vector3(transform.eulerAngles.x, 0, transform.eulerAngles.z);
-                }
+                currentTurnAngle = 0;
             }
+            transform.rotation = Quaternion.AngleAxis(currentTurnAngle, Vector3.up);
         }
     }
 
-    [ContextMenu("Open Door")]
     public void OpenDoor()
     {
-        opening = true;
+        isOpening = true;
     }
 
-    [ContextMenu("Close Door")]
     public void CloseDoor()
     {
-        opening = false;
-    }
-
-    public void ToggleDoor()
-    {
-        opening = !opening;
+        isOpening = false;
     }
 }

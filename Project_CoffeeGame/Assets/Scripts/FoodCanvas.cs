@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class FoodCanvas : MonoBehaviour
 {
-    public GameObject[] foodPrefabs;
-    public GameObject currentFood;
+    public GameObject[] foodPrefabs;    
     private List<GameObject> foodsInMenu;
+
+    public GameObject currentFood;
 
     void Start()
     {
@@ -16,8 +17,7 @@ public class FoodCanvas : MonoBehaviour
     public void Create(string foodName, Vector2 startingPosition)
     {
         currentFood = Instantiate(foodPrefabs[foodsInMenu.FindIndex(a => a.name == foodName)], transform.position, Quaternion.identity);
-/*        currentFood = Instantiate(foodPrefabs[foodsInMenu.FindIndex(a => a.Contains(foodName))], transform.position, Quaternion.identity);*/
-        currentFood.transform.SetParent(transform);
+        currentFood.transform.SetParent(transform); // Put it into food canvas
         currentFood.transform.position = startingPosition;
         currentFood.SetActive(true);
     }

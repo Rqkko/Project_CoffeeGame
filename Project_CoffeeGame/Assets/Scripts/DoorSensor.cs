@@ -8,7 +8,7 @@ public class DoorSensor : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (doorMover.opening == false)
+        if (doorMover.isOpening == false)
         {
             doorMover.OpenDoor();
         }
@@ -16,7 +16,6 @@ public class DoorSensor : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-
         doorMover.CloseDoor();
     }
 }

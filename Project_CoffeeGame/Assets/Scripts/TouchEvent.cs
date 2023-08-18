@@ -7,7 +7,6 @@ public class TouchEvent: MonoBehaviour
 {
     private GameObject touchedFood;
     public FoodCanvas foodCanvas;
-    public MenuManager menuManager;
 
     // Update is called once per frame
     void Update()
@@ -17,7 +16,7 @@ public class TouchEvent: MonoBehaviour
             Touch touch = Input.GetTouch(0);
             Ray touchRay = Camera.main.ScreenPointToRay(touch.position);
 
-            // Click
+            // Tap
             if (touch.phase == TouchPhase.Began)
             {
                 RaycastHit rayHit;

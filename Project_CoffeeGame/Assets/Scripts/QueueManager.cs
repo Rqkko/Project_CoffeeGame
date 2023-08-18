@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,15 +6,18 @@ using UnityEngine;
 public class QueueManager : MonoBehaviour
 {
     public GameObject[] customerPrefabs;
-    private float timeElapsed;
+
     public float customerSpawnTime;
     public float customerSpawnPosX;
-    public List<GameObject> customersInQueue;
     public float maxQueue;
-
-    public Vector3 entryPos; 
+    public Vector3 entryPos;
     public Vector3 orderPos; // Customer needs to stand here to order
     public float queuePosGapZ;
+
+    private float timeElapsed;
+    public List<GameObject> customersInQueue;
+
+    public Boolean isSpawning;
 
     // Start is called before the first frame update
     void Start()
@@ -25,9 +29,9 @@ public class QueueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timeElapsed >= customerSpawnTime && customersInQueue.Count < maxQueue)
+        if (timeElapsed >= customerSpawnTime && customersInQueue.Count < maxQueue && isSpawning)
         {
-            int customerIndex = Random.Range(0, customerPrefabs.Length);
+            int customerIndex = UnityEngine.Random.Range(0, customerPrefabs.Length);
             Vector3 spawnPos = new Vector3(GetRandomSpawnSide(), transform.position.y, transform.position.z);
             Instantiate(customerPrefabs[customerIndex], spawnPos, transform.rotation);
             timeElapsed = 0;
@@ -38,7 +42,7 @@ public class QueueManager : MonoBehaviour
     // Get spawn side (left or right of the building
     private float GetRandomSpawnSide()
     {
-        int x = Random.Range(0, 2);
+        int x = UnityEngine.Random.Range(0, 2);
         if (x == 0)
         {
             return -customerSpawnPosX;
@@ -51,13 +55,7 @@ public class QueueManager : MonoBehaviour
     {
         for (int i = 0; i < customersInQueue.Count; i++)
         {
-            customersInQueue[i].GetComponent<Customer>().DecreaseQueue();
+            customersInQueue[i].GetComponent<Customer>().DecreaseCurrentQueue();
         }
-    }
-
-    // Serve the customer ordering
-    public void ServeCurrentCustomer()
-    {
-        customersInQueue[0].GetComponent<Customer>().Serve();
     }
 }

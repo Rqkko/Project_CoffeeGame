@@ -12,11 +12,10 @@ public class Customer : MonoBehaviour
 
     private QueueManager queueManager;
     private int currentQueue;
-    private Vector3 queuePos; // Where to stand when queing
+    private Vector3 currentQueuePos; // Where to stand when queing
 
-    private List<GameObject> foodsInMenu;
     public string foodWanted;
-    private GameObject foodText;
+    private GameObject foodText; // Display when ordering
 
     private Animator animator;
 
@@ -30,10 +29,9 @@ public class Customer : MonoBehaviour
         isOutside = true;
         isEntering = false;
         isReadyToOrder = false;
-        queuePos = new Vector3(queueManager.orderPos.x, queueManager.orderPos.y, GetQueuePosZ());
+        currentQueuePos = new Vector3(queueManager.orderPos.x, queueManager.orderPos.y, GetQueuePosZ());
 
-        foodsInMenu = GameObject.FindGameObjectWithTag("Menu").GetComponent<MenuManager>().foodsInMenu;
-        foodWanted = GetRandomFood();
+        foodWanted = GameObject.FindGameObjectWithTag("Menu").GetComponent<MenuManager>().GetRandomFoodInMenu();
         foodText = transform.GetChild(1).gameObject.transform.GetChild(0).gameObject;
         foodText.GetComponent<TextMeshProUGUI>().text = foodWanted;
 
@@ -61,9 +59,9 @@ public class Customer : MonoBehaviour
         // Walking to the queue
         else if (isEntering)
         {
-            if (transform.position != queuePos)
+            if (transform.position != currentQueuePos)
             {
-                transform.position = Vector3.MoveTowards(transform.position, queuePos, walkSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, currentQueuePos, walkSpeed * Time.deltaTime);
             }
             else
             {
@@ -95,7 +93,6 @@ public class Customer : MonoBehaviour
     }
 
     // When served
-    [ContextMenu("Serve")]
     public void Serve()
     {
         queueManager.customersInQueue.Remove(gameObject);
@@ -103,17 +100,11 @@ public class Customer : MonoBehaviour
         queueManager.RunQueue();
     }
 
-    public void DecreaseQueue()
+    public void DecreaseCurrentQueue()
     {
         currentQueue--;
-        queuePos = new Vector3(queueManager.orderPos.x, queueManager.orderPos.y, GetQueuePosZ());
+        currentQueuePos = new Vector3(queueManager.orderPos.x, queueManager.orderPos.y, GetQueuePosZ());
         animator.SetTrigger("Walk");
-    }
-
-    private string GetRandomFood()
-    {
-        int foodIndex = Random.Range(0, foodsInMenu.Count);
-        return foodsInMenu[foodIndex].name;
     }
 
     public void CheckCorrectFood(string food)

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028384, g: 0.22571379, b: 0.3069227, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028437, g: 0.22571436, b: 0.306924, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -132,8 +132,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 69219077}
-  - component: {fileID: 69219076}
-  - component: {fileID: 69219075}
   - component: {fileID: 69219074}
   - component: {fileID: 69219073}
   - component: {fileID: 69219072}
@@ -216,30 +214,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &69219075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 69219071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ca002da428252441b92f28d83c8a65f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &69219076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 69219071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &69219077
 Transform:
   m_ObjectHideFlags: 0
@@ -1068,7 +1042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 260
-  opening: 0
+  isOpening: 0
 --- !u!850595691 &1105367607
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -1239,11 +1213,12 @@ MonoBehaviour:
   - {fileID: 1026063329138984586, guid: 745fdb81837f1bb4ca26ab99e21033e8, type: 3}
   customerSpawnTime: 1.5
   customerSpawnPosX: 15
-  customersInQueue: []
-  maxQueue: 5
+  maxQueue: 10
   entryPos: {x: 0, y: 0, z: 20}
   orderPos: {x: 0, y: 0, z: 0}
   queuePosGapZ: 1
+  customersInQueue: []
+  isSpawning: 1
 --- !u!43 &1625032839
 Mesh:
   m_ObjectHideFlags: 0
@@ -1449,7 +1424,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodCanvas: {fileID: 661695970}
-  menuManager: {fileID: 1423710592}
 --- !u!4 &1643917707
 Transform:
   m_ObjectHideFlags: 0
