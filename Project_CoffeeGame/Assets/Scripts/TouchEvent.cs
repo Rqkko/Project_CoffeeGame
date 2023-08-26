@@ -8,6 +8,8 @@ public class TouchEvent: MonoBehaviour
     private GameObject touchedFood;
     public FoodCanvas foodCanvas;
 
+    public GameObject coffeeMachine;
+
     // Update is called once per frame
     void Update()
     {
@@ -26,7 +28,13 @@ public class TouchEvent: MonoBehaviour
                     {
                         touchedFood = rayHit.collider.gameObject;
                         rayHit.collider.gameObject.SetActive(false);
-                        foodCanvas.Create(touchedFood.name, touch.position);
+                        Debug.Log(rayHit.collider.gameObject.name);
+                        foodCanvas.Create(touchedFood.GetComponent<ObjectID>().objectName, touch.position);
+                    }
+
+                    else if (rayHit.collider.gameObject.GetComponent<ObjectID>().objectName == "CoffeeBeans")
+                    {
+                        GameObject.FindGameObjectWithTag("CoffeeMachine").GetComponent<CoffeeMachine>().MakeCoffee();
                     }
                 }
             }
