@@ -58,7 +58,7 @@ public class TouchEvent: MonoBehaviour
                     {
                         if (foodRayHit.collider.gameObject.GetComponent<Customer>().isReadyToOrder)
                         {
-                            foodRayHit.collider.gameObject.GetComponent<Customer>().CheckCorrectFood(touchedFood.name);
+                            foodRayHit.collider.gameObject.GetComponent<Customer>().CheckCorrectFood(touchedFood);
                         }
                     }
                 }

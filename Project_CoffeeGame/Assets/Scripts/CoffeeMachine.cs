@@ -21,6 +21,6 @@ public class CoffeeMachine : MonoBehaviour
     [ContextMenu("Make Coffee")]
     public void MakeCoffee()
     {
-        Instantiate(coffeeCup, new Vector3(transform.position.x, transform.position.y-.25f, transform.position.z-.25f), Quaternion.identity);
+        Instantiate(coffeeCup, new Vector3(transform.position.x + .05f, transform.position.y-.16f, transform.position.z-.05f), Quaternion.identity);
     }
 }
