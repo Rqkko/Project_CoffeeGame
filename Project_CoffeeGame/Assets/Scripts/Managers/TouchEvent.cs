@@ -24,12 +24,10 @@ public class TouchEvent: MonoBehaviour
                 RaycastHit rayHit;
                 if (Physics.Raycast(touchRay, out rayHit))
                 {
-                    if (rayHit.collider.gameObject.CompareTag("Food"))
+                    if (rayHit.collider.gameObject.TryGetComponent(out IClickable clickableObject))
                     {
                         touchedFood = rayHit.collider.gameObject;
-                        rayHit.collider.gameObject.SetActive(false);
-                        Debug.Log(rayHit.collider.gameObject.name);
-                        foodCanvas.Create(touchedFood.GetComponent<ObjectID>().objectName, touch.position);
+                        clickableObject.Click(touch.position);
                     }
 
                     else if (rayHit.collider.gameObject.GetComponent<ObjectID>().objectName == "CoffeeBeans")
