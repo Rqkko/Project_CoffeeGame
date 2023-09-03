@@ -2,12 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Food : MonoBehaviour, IItem, IInteractable
+public class Food : MonoBehaviour
 {
-    public string IItem.itemName { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    public string idName;
+    private SpriteRenderer spriteRenderer;
 
-    public void Interact()
+    // Canvas stuff
+    private GameObject canvasPrefab;
+    private FoodCanvas foodCanvas;
+
+    private void Start()
     {
-        throw new System.NotImplementedException();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        canvasPrefab = Resources.Load<GameObject>("Prefabs/UI/CoffeeCup");
+        foodCanvas = GameObject.FindGameObjectWithTag("FoodCanvas").GetComponent<FoodCanvas>();
+    }
+
+    // Run when clicked
+    public void Click(Vector2 clickPosition)
+    {
+        spriteRenderer.enabled = false;
+        foodCanvas.Create(canvasPrefab, clickPosition);
+    }
+
+    public void Move(Vector2 targetPosition)
+    {
+        foodCanvas.Move(targetPosition);
+    }
+
+    // Run when release mouse
+    public void Release()
+    {
+        spriteRenderer.enabled = true;
+        foodCanvas.Remove();
     }
 }

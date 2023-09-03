@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028437, g: 0.22571436, b: 0.306924, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028384, g: 0.22571379, b: 0.3069227, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -591,7 +591,7 @@ GameObject:
   - component: {fileID: 661695970}
   m_Layer: 5
   m_Name: Food Canvas
-  m_TagString: Untagged
+  m_TagString: FoodCanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2161,11 +2161,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CoffeeCup
-      objectReference: {fileID: 0}
-    - target: {fileID: 4384641131119245858, guid: 46a2ef622f7960c42bf896a99e4557cd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7287613638209820054, guid: 46a2ef622f7960c42bf896a99e4557cd,
         type: 3}

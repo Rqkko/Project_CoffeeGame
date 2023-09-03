@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class TouchEvent: MonoBehaviour
 {
-    private GameObject touchedFood;
+    private Food touchedFood;
     public FoodCanvas foodCanvas;
 
     public GameObject coffeeMachine;
@@ -26,10 +26,12 @@ public class TouchEvent: MonoBehaviour
                 {
                     if (rayHit.collider.gameObject.CompareTag("Food"))
                     {
-                        touchedFood = rayHit.collider.gameObject;
-                        rayHit.collider.gameObject.SetActive(false);
-                        Debug.Log(rayHit.collider.gameObject.name);
-                        foodCanvas.Create(touchedFood.GetComponent<ObjectID>().objectName, touch.position);
+                        touchedFood = rayHit.collider.gameObject.GetComponent<Food>();
+                        touchedFood.Click(touch.position);
+                        
+                        //rayHit.collider.gameObject.SetActive(false);
+                        //Debug.Log(rayHit.collider.gameObject.name);
+                        //foodCanvas.Create(touchedFood.GetComponent<ObjectID>().objectName, touch.position);
                     }
 
                     else if (rayHit.collider.gameObject.GetComponent<ObjectID>().objectName == "CoffeeBeans")
@@ -42,7 +44,7 @@ public class TouchEvent: MonoBehaviour
             // Move
             if (touch.phase == TouchPhase.Moved && touchedFood)
             {
-                foodCanvas.Move(touch.position);
+                touchedFood.Move(touch.position);
             }
 
             // Out
@@ -62,8 +64,9 @@ public class TouchEvent: MonoBehaviour
                         }
                     }
                 }
-                touchedFood.SetActive(true);
-                foodCanvas.Remove();
+                //touchedFood.SetActive(true);
+                //foodCanvas.Remove();
+                touchedFood.Release();
                 touchedFood = null;
             }
         }

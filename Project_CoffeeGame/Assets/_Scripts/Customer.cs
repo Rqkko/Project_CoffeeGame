@@ -107,12 +107,12 @@ public class Customer : MonoBehaviour
         animator.SetTrigger("Walk");
     }
 
-    public void CheckCorrectFood(GameObject food)
+    public void CheckCorrectFood(Food food)
     {
-        if (food.GetComponent<ObjectID>().objectName == foodWanted)
+        if (food.idName == foodWanted)
         {
             Serve();
-            Destroy(food);
+            Destroy(food.gameObject);
         }
         else
         {
