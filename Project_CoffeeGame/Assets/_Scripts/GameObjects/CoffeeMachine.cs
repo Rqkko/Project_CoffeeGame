@@ -5,7 +5,8 @@ using UnityEngine;
 public class CoffeeMachine : MonoBehaviour
 {
     public GameObject coffeeCup;
-    private float x = 1.25f;
+    [SerializeField]
+    private Vector3 offsetPosition = new Vector3(.05f, -.16f, -.05f);
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,6 @@ public class CoffeeMachine : MonoBehaviour
     [ContextMenu("Make Coffee")]
     public void MakeCoffee()
     {
-        Instantiate(coffeeCup, new Vector3(transform.position.x + .05f, transform.position.y-.16f, transform.position.z-.05f), Quaternion.identity);
+        Instantiate(coffeeCup, transform.position + offsetPosition, Quaternion.identity);
     }
 }

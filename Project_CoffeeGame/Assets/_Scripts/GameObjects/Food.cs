@@ -2,26 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Food : MonoBehaviour
+public class Food : MonoBehaviour, IInteractable
 {
     public string idName;
+
+    [Header("Components")]
+    [SerializeField]
     private SpriteRenderer spriteRenderer;
+    [SerializeField]
+    private BoxCollider boxCollider;
 
     // Canvas stuff
+    [Header("Canvas Components")]
+    [SerializeField]
     private GameObject canvasPrefab;
+    [SerializeField]
     private FoodCanvas foodCanvas;
 
     private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        canvasPrefab = Resources.Load<GameObject>("Prefabs/UI/CoffeeCup");
         foodCanvas = GameObject.FindGameObjectWithTag("FoodCanvas").GetComponent<FoodCanvas>();
     }
 
-    // Run when clicked
-    public void Click(Vector2 clickPosition)
+    public void Interact(Vector2 clickPosition)
     {
         spriteRenderer.enabled = false;
+        boxCollider.enabled = false;
         foodCanvas.Create(canvasPrefab, clickPosition);
     }
 
@@ -33,7 +39,8 @@ public class Food : MonoBehaviour
     // Run when release mouse
     public void Release()
     {
-        spriteRenderer.enabled = true;
         foodCanvas.Remove();
+        spriteRenderer.enabled = true;
+        boxCollider.enabled = true;
     }
 }

@@ -24,50 +24,49 @@ public class TouchEvent: MonoBehaviour
                 RaycastHit rayHit;
                 if (Physics.Raycast(touchRay, out rayHit))
                 {
-                    if (rayHit.collider.gameObject.CompareTag("Food"))
+                    if (rayHit.collider.gameObject.TryGetComponent(out IInteractable interactableObject))
                     {
-                        touchedFood = rayHit.collider.gameObject.GetComponent<Food>();
-                        touchedFood.Click(touch.position);
-                        
-                        //rayHit.collider.gameObject.SetActive(false);
-                        //Debug.Log(rayHit.collider.gameObject.name);
-                        //foodCanvas.Create(touchedFood.GetComponent<ObjectID>().objectName, touch.position);
-                    }
+                        interactableObject.Interact(touch.position);
 
-                    else if (rayHit.collider.gameObject.GetComponent<ObjectID>().objectName == "CoffeeBeans")
-                    {
-                        GameObject.FindGameObjectWithTag("CoffeeMachine").GetComponent<CoffeeMachine>().MakeCoffee();
-                    }
-                }
-            }
-
-            // Move
-            if (touch.phase == TouchPhase.Moved && touchedFood)
-            {
-                touchedFood.Move(touch.position);
-            }
-
-            // Out
-            if (touch.phase == TouchPhase.Ended && touchedFood)
-            {
-                Ray foodRay = Camera.main.ScreenPointToRay(foodCanvas.currentFood.transform.position);
-                RaycastHit foodRayHit;
-
-                if (Physics.Raycast(foodRay, out foodRayHit))
-                {
-                    // Food hit the customer
-                    if (foodRayHit.collider.gameObject.CompareTag("Customer"))
-                    {
-                        if (foodRayHit.collider.gameObject.GetComponent<Customer>().isReadyToOrder)
+                        if (rayHit.collider.gameObject.TryGetComponent(out Food food))
                         {
-                            foodRayHit.collider.gameObject.GetComponent<Customer>().CheckCorrectFood(touchedFood);
+                            touchedFood = food;
                         }
                     }
                 }
-                //touchedFood.SetActive(true);
-                //foodCanvas.Remove();
-                touchedFood.Release();
-                touchedFood = null;
+            }
+
+            // Move (Food only for now)
+            if (touch.phase == TouchPhase.Moved)
+            {
+                if (touchedFood)
+                {
+                    touchedFood.Move(touch.position);
+                }
+            }
+
+            // Out
+            if (touch.phase == TouchPhase.Ended)
+            {
+                if (touchedFood)
+                {
+                    Ray foodRay = Camera.main.ScreenPointToRay(foodCanvas.currentFood.transform.position);
+                    RaycastHit foodRayHit;
+
+                    if (Physics.Raycast(foodRay, out foodRayHit))
+                    {
+                        if (foodRayHit.collider.gameObject.TryGetComponent(out Customer customer))
+                        {
+                            // Food hit customer
+                            if (customer.isReadyToOrder)
+                            {
+                                customer.CheckCorrectFood(touchedFood);
+                            }
+                        }
+                    }
+                    touchedFood.Release();
+                    touchedFood = null;
+                }
             }
         }
     }

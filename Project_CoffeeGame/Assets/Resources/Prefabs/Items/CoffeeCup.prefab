@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8211586077060307732}
   m_Layer: 0
   m_Name: CoffeeCup
-  m_TagString: Food
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,3 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idName: CoffeeCup
+  spriteRenderer: {fileID: 30087802454054721}
+  boxCollider: {fileID: 8618155755485364809}
+  canvasPrefab: {fileID: 6960893132573451497, guid: dbd4f600a245846b7b8f98fbd4d68a44,
+    type: 3}
+  foodCanvas: {fileID: 0}

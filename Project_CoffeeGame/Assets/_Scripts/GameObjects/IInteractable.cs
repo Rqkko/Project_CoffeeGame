@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    void Interact();
+    void Interact(Vector2 clickPosition);
 }
